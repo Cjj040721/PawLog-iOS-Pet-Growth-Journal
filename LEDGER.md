@@ -9,6 +9,7 @@
 - T11 战略待定:v1.1 是否上轻订阅;上线前是否先做 landing page 验证需求
 
 ## DONE
+- 2026-07-30 | T12 | 设计语言 v1 定稿(design/design-language.md)+ 最小版 landing page(landing/index.html,留资用 mailto 免后端方案) | `810d951` | Playwright 截图走查(桌面 1280 + 移动 390)
 - 2026-07-30 | T8 | 补三件套(README/LEDGER/AGENTS.md) | — | 已目检
 - 2026-07-30 | T7 | git init + 首次提交,代码资产入库 | `2e5252a` | git log 确认
 - 2026-07-28 | T6 | 补记:记录日期可选过去,已有记录预填+覆盖提示 | — | xcodebuild 通过
