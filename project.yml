@@ -1,0 +1,64 @@
+name: PawLog
+options:
+  bundleIdPrefix: com.junjia.pawlog
+  deploymentTarget:
+    iOS: "26.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+    TARGETED_DEVICE_FAMILY: "1"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: 6HRM8RJ78G
+targets:
+  PawLog:
+    type: application
+    platform: iOS
+    sources:
+      - path: PawLog
+      - path: Shared
+    info:
+      path: PawLog/Info.plist
+      properties:
+        CFBundleName: PawLog
+        CFBundleDisplayName: PawLog
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSCameraUsageDescription: 需要相机权限来拍摄宠物照片
+        NSPhotoLibraryUsageDescription: 用于从相册选择宠物照片
+        NSPhotoLibraryAddUsageDescription: 用于保存生成的对比图和成长视频到相册
+    entitlements:
+      path: PawLog/PawLog.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.junjia.pawlog.shared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.junjia.pawlog
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - target: PawLogWidget
+        embed: true
+  PawLogWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: PawLogWidget
+      - path: Shared
+    info:
+      path: PawLogWidget/Info.plist
+      properties:
+        CFBundleName: PawLogWidget
+        CFBundleDisplayName: PawLog
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: PawLogWidget/PawLogWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.junjia.pawlog.shared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.junjia.pawlog.widget
+      SKIP_INSTALL: YES
