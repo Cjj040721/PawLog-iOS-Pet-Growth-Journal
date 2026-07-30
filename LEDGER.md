@@ -9,6 +9,7 @@
 - T11 战略待定:v1.1 是否上轻订阅;上线前是否先做 landing page 验证需求
 
 ## DONE
+- 2026-07-30 | T12 | [美术] 建立 design/design-language.md 视觉规范(色彩 OKLCH/字体/圆角/组件状态/产出物模板)+ 视觉问题清单(CAO-11) | 本提交(分支 agent/pawlog/2dd3cbf5) | design/preview/design-tokens.png 示意稿
 - 2026-07-30 | T8 | 补三件套(README/LEDGER/AGENTS.md) | — | 已目检
 - 2026-07-30 | T7 | git init + 首次提交,代码资产入库 | `2e5252a` | git log 确认
 - 2026-07-28 | T6 | 补记:记录日期可选过去,已有记录预填+覆盖提示 | — | xcodebuild 通过

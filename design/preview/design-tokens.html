@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #F8F5F0; color: #30271F; width: 1200px; padding: 48px;
+  }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: 0.5px; }
+  h1 .accent { color: #A45C31; }
+  .sub { color: #6C6158; font-size: 15px; margin-top: 8px; }
+  h2 { font-size: 20px; font-weight: 700; margin: 40px 0 16px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .swatch { width: 176px; border-radius: 16px; overflow: hidden; background: #fff;
+    box-shadow: 0 1px 3px rgba(48,39,31,.08); }
+  .swatch .c { height: 88px; }
+  .swatch .t { padding: 10px 12px; font-size: 12px; }
+  .swatch .t b { display: block; font-size: 13px; }
+  .swatch .t span { color: #6C6158; }
+  .dark-strip { background: #1E1712; border-radius: 20px; padding: 24px; margin-top: 12px; }
+  .dark-strip .swatch { background: #2E241E; }
+  .dark-strip .swatch .t, .dark-strip .swatch .t span { color: #EBE7E0; }
+  .dark-strip .swatch .t span { color: #A89C90; }
+  .row { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+  .card { background: #fff; border-radius: 16px; padding: 16px;
+    box-shadow: 0 1px 3px rgba(48,39,31,.08); }
+  .btn { display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px; font-weight: 600; font-size: 16px; padding: 12px 28px; }
+  .btn-primary { background: #E28D4F; color: #fff; }
+  .btn-pressed { background: #E28D4F; color: #fff; opacity: .85; transform: scale(.97); }
+  .btn-disabled { background: #E28D4F; color: #fff; opacity: .4; }
+  .btn-secondary { background: #F8EED5; color: #A45C31; }
+  .type-row { display: flex; align-items: baseline; gap: 16px; margin: 10px 0; }
+  .type-row .label { width: 130px; font-size: 12px; color: #6C6158; flex-shrink: 0; }
+  .rounded-num { font-family: ui-rounded, -apple-system, sans-serif; font-weight: 800; }
+  .radius-box { background: #F8EED5; color: #A45C31; font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; width: 120px; height: 72px; }
+  .empty-state { width: 320px; text-align: center; padding: 32px 24px; }
+  .empty-state .icon { width: 64px; height: 64px; border-radius: 32px; background: #F8EED5;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; }
+  .milestone { display: flex; gap: 12px; align-items: center; width: 320px; }
+  .milestone .star { width: 64px; height: 64px; border-radius: 12px; background: #F8EED5;
+    display: flex; align-items: center; justify-content: center; font-size: 26px; color: #E4B750; }
+  .compare { width: 460px; border-radius: 20px; overflow: hidden; background: #fff;
+    box-shadow: 0 2px 8px rgba(48,39,31,.10); }
+  .compare .photos { display: flex; gap: 16px; padding: 16px; }
+  .compare .ph { flex: 1; height: 200px; border-radius: 20px; display: flex; align-items: center;
+    justify-content: center; font-size: 40px; }
+  .compare .bar { padding: 12px 20px; font-size: 12px; display: flex; justify-content: space-between; }
+  .compare .bar .sig { color: #A89C90; }
+  .caption-chip { display: inline-block; background: rgba(30,23,18,.4); color: #EBE7E0;
+    border-radius: 28px; padding: 12px 24px; font-size: 15px; font-weight: 600; }
+  .video-frame { width: 230px; height: 408px; background: #1E1712; border-radius: 20px;
+    position: relative; display: flex; align-items: center; justify-content: center; font-size: 52px; }
+  .video-frame .caption-chip { position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+  .widget { width: 170px; height: 170px; border-radius: 24px; background: #fff;
+    box-shadow: 0 2px 8px rgba(48,39,31,.10); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px; }
+  .widget .avatar { width: 56px; height: 56px; border-radius: 28px; background: #F8EED5;
+    display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .widget .days { font-size: 17px; font-weight: 700; color: #A45C31; }
+  .widget .name { font-size: 12px; color: #6C6158; }
+  .spacing-demo { display: flex; gap: 8px; align-items: flex-end; }
+  .spacing-demo div { background: #E28D4F; opacity: .75; width: 24px; border-radius: 4px; }
+  .spacing-demo span { font-size: 11px; color: #6C6158; width: 24px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1>PawLog 设计语言 <span class="accent">v1.0</span></h1>
+<p class="sub">温暖 · 柔软 · 克制 · 经得起回看 —— 给新手宠物主的成长时间胶囊</p>
+
+<h2>品牌色(浅色)</h2>
+<div class="grid">
+  <div class="swatch"><div class="c" style="background:#E28D4F"></div><div class="t"><b>pawPrimary</b>#E28D4F<br><span>oklch(0.72 0.13 55)</span></div></div>
+  <div class="swatch"><div class="c" style="background:#A45C31"></div><div class="t"><b>pawPrimaryStrong</b>#A45C31<br><span>文字级 5.1:1</span></div></div>
+  <div class="swatch"><div class="c" style="background:#F8EED5"></div><div class="t"><b>pawPrimarySoft</b>#F8EED5<br><span>浅底/选中态</span></div></div>
+  <div class="swatch"><div class="c" style="background:linear-gradient(135deg,#F6BA7C,#EB9C79)"></div><div class="t"><b>图标渐变(源)</b>#F6BA7C→#EB9C79<br><span>同源色相</span></div></div>
+</div>
+
+<h2>中性色(浅色)</h2>
+<div class="grid">
+  <div class="swatch"><div class="c" style="background:#F8F5F0;border-bottom:1px solid #eee"></div><div class="t"><b>pawBg</b>#F8F5F0<br><span>页面背景 奶油白</span></div></div>
+  <div class="swatch"><div class="c" style="background:#FFFFFF;border-bottom:1px solid #eee"></div><div class="t"><b>pawSurface</b>#FFFFFF<br><span>卡片/表单行</span></div></div>
+  <div class="swatch"><div class="c" style="background:#EEE9E1"></div><div class="t"><b>pawFill</b>#EEE9E1<br><span>占位/骨架</span></div></div>
+  <div class="swatch"><div class="c" style="background:#30271F"></div><div class="t"><b>pawText</b>#30271F<br><span>暖黑 13.5:1</span></div></div>
+  <div class="swatch"><div class="c" style="background:#6C6158"></div><div class="t"><b>pawTextSecondary</b>#6C6158<br><span>辅助 5.5:1</span></div></div>
+</div>
+
+<h2>深色模式</h2>
+<div class="dark-strip">
+  <div class="grid">
+    <div class="swatch"><div class="c" style="background:#1E1712"></div><div class="t"><b>pawBg</b>#1E1712<br><span>暖墨</span></div></div>
+    <div class="swatch"><div class="c" style="background:#2E241E"></div><div class="t"><b>pawSurface</b>#2E241E</div></div>
+    <div class="swatch"><div class="c" style="background:#3E332C"></div><div class="t"><b>pawFill</b>#3E332C</div></div>
+    <div class="swatch"><div class="c" style="background:#F3A768"></div><div class="t"><b>pawPrimary</b>#F3A768<br><span>8.9:1</span></div></div>
+    <div class="swatch"><div class="c" style="background:#EBE7E0"></div><div class="t"><b>pawText</b>#EBE7E0</div></div>
+  </div>
+</div>
+
+<h2>语义色</h2>
+<div class="grid">
+  <div class="swatch"><div class="c" style="background:#5AA26B"></div><div class="t"><b>pawSuccess</b>#5AA26B<br><span>苔绿</span></div></div>
+  <div class="swatch"><div class="c" style="background:#DDB049"></div><div class="t"><b>pawWarning</b>#DDB049<br><span>图形级</span></div></div>
+  <div class="swatch"><div class="c" style="background:#8D5E00"></div><div class="t"><b>pawWarningText</b>#8D5E00<br><span>文字级 5.6:1</span></div></div>
+  <div class="swatch"><div class="c" style="background:#CB4930"></div><div class="t"><b>pawError</b>#CB4930<br><span>暖红 4.6:1</span></div></div>
+  <div class="swatch"><div class="c" style="background:#E4B750"></div><div class="t"><b>pawMilestone</b>#E4B750<br><span>里程碑星金</span></div></div>
+</div>
+
+<h2>字体层级</h2>
+<div class="card">
+  <div class="type-row"><span class="label">情感大数字 rounded</span><span class="rounded-num" style="font-size:34px;color:#A45C31">在一起第 128 天</span></div>
+  <div class="type-row"><span class="label">卡片标题 headline</span><span style="font-size:17px;font-weight:600">2026年7月30日</span></div>
+  <div class="type-row"><span class="label">正文 body</span><span style="font-size:17px">今天第一次自己爬上沙发,厉害坏了。</span></div>
+  <div class="type-row"><span class="label">辅助 subheadline</span><span style="font-size:15px;color:#6C6158">金毛巡回犬 · 2.4 kg</span></div>
+  <div class="type-row"><span class="label">说明 footnote</span><span style="font-size:13px;color:#8D5E00">当天已有记录,保存将覆盖更新</span></div>
+</div>
+
+<h2>按钮状态 / 圆角 / 间距</h2>
+<div class="row">
+  <div class="card" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+    <span class="btn btn-primary">立即记录</span>
+    <span class="btn btn-pressed">按下 scale 0.97</span>
+    <span class="btn btn-disabled">禁用 opacity 0.4</span>
+    <span class="btn btn-secondary">次按钮</span>
+  </div>
+  <div class="card" style="display:flex;gap:12px">
+    <div class="radius-box" style="border-radius:8px">r8 标签</div>
+    <div class="radius-box" style="border-radius:12px">r12 缩略图</div>
+    <div class="radius-box" style="border-radius:16px">r16 卡片</div>
+    <div class="radius-box" style="border-radius:20px">r20 产出物</div>
+  </div>
+  <div class="card">
+    <div class="spacing-demo">
+      <div style="height:4px"></div><div style="height:8px"></div><div style="height:12px"></div>
+      <div style="height:16px"></div><div style="height:20px"></div><div style="height:24px"></div><div style="height:32px"></div>
+    </div>
+    <div class="spacing-demo" style="margin-top:4px">
+      <span>4</span><span>8</span><span>12</span><span>16</span><span>20</span><span>24</span><span>32</span>
+    </div>
+  </div>
+</div>
+
+<h2>空状态 / 里程碑行</h2>
+<div class="row">
+  <div class="card empty-state">
+    <div class="icon">📷</div>
+    <div style="font-size:17px;font-weight:600">还没有成长记录</div>
+    <div style="font-size:15px;color:#6C6158;margin:8px 0 16px">每天一张照片,见证豆豆的长大</div>
+    <span class="btn btn-primary" style="font-size:15px;padding:10px 24px">立即记录</span>
+  </div>
+  <div class="card milestone">
+    <div class="star">★</div>
+    <div>
+      <div style="font-size:17px;font-weight:600">2026年6月12日</div>
+      <div style="font-size:15px;color:#6C6158;margin-top:4px">第一次打疫苗</div>
+    </div>
+  </div>
+  <div class="widget">
+    <div class="avatar">🐾</div>
+    <div class="days rounded-num">第 128 天</div>
+    <div class="name">豆豆</div>
+  </div>
+</div>
+
+<h2>产出物模板(新)</h2>
+<div class="row">
+  <div>
+    <div class="compare">
+      <div class="photos">
+        <div class="ph" style="background:#EEE9E1">🐕</div>
+        <div class="ph" style="background:#EEE9E1">🐕</div>
+      </div>
+      <div class="bar"><span>3月2日 · 2月龄</span><span class="sig">PawLog</span><span>7月30日 · 7月龄</span></div>
+    </div>
+    <p class="sub" style="margin-top:8px">对比图:奶油底 + 圆角 20 + 小落款,取代黑底白字</p>
+  </div>
+  <div>
+    <div class="video-frame">🐈
+      <span class="caption-chip">7月30日 · 到家第 96 天</span>
+    </div>
+    <p class="sub" style="margin-top:8px">视频:暖墨底 + 奶油字圆角底条,取代黑底白粗体</p>
+  </div>
+</div>
+
+</body>
+</html>
