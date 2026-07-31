@@ -28,9 +28,9 @@ struct ProfileView: View {
                                     .clipShape(Circle())
                             } else {
                                 Image(systemName: "pawprint.fill")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.pawPrimary)
                                     .frame(width: 36, height: 36)
-                                    .background(Color(.systemGray6), in: Circle())
+                                    .background(Color.pawFill, in: Circle())
                             }
                             Text(item.name)
                                 .foregroundStyle(.primary)
@@ -56,9 +56,9 @@ struct ProfileView: View {
                     } else {
                         Image(systemName: "pawprint.fill")
                             .font(.largeTitle)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.pawPrimary)
                             .frame(width: 72, height: 72)
-                            .background(Color(.systemGray6), in: Circle())
+                            .background(Color.pawFill, in: Circle())
                     }
                     VStack(alignment: .leading, spacing: 4) {
                         Text(pet.name)
@@ -71,7 +71,8 @@ struct ProfileView: View {
                         if let days = store.daysTogether(for: pet) {
                             Text("在一起第 \(days) 天")
                                 .font(.subheadline)
-                                .foregroundStyle(.tint)
+                                .monospacedDigit()
+                                .foregroundStyle(Color.pawPrimaryStrong)
                         }
                     }
                     Spacer()

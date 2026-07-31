@@ -22,7 +22,7 @@ struct GrowthVideoView: View {
                     .monospacedDigit()
             } else if let videoURL {
                 Label("视频已生成", systemImage: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
+                    .foregroundStyle(Color.pawSuccess)
                 HStack(spacing: 24) {
                     Button {
                         Task { await saveToAlbum(videoURL) }

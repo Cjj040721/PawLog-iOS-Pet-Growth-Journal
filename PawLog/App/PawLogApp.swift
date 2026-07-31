@@ -12,6 +12,8 @@ struct PawLogApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                // 全局 tint = 暖阳杏主色;文字级着色用 pawPrimaryStrong(design-language §9.2)
+                .tint(.pawPrimary)
         }
         .modelContainer(container)
     }
@@ -24,15 +26,17 @@ struct RootView: View {
 
     var body: some View {
         Group {
-            if let store {
-                if let pet = store.selectedPet ?? pets.first {
-                    MainTabView(pet: pet)
-                } else {
-                    OnboardingView()
-                }
+            #if DEBUG
+            if DebugWalkthrough.compareCardRequested {
+                DebugCompareCardScreen()
+            } else if DebugWalkthrough.widgetRequested {
+                DebugWidgetScreen()
             } else {
-                ProgressView()
+                content
             }
+            #else
+            content
+            #endif
         }
         .environment(store)
         .task {
@@ -40,6 +44,19 @@ struct RootView: View {
                 DemoDataSeeder.seedIfRequested(modelContext: modelContext)
                 store = AppStore(modelContext: modelContext)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if let store {
+            if let pet = store.selectedPet ?? pets.first {
+                MainTabView(pet: pet)
+            } else {
+                OnboardingView()
+            }
+        } else {
+            ProgressView()
         }
     }
 }

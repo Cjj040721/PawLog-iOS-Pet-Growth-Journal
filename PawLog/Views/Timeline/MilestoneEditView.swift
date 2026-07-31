@@ -16,19 +16,22 @@ struct MilestoneEditView: View {
             if showValidation {
                 Text("请填写里程碑标题")
                     .font(.footnote)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(Color.pawError)
             }
-            Button("保存") {
-                let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
-                guard !trimmed.isEmpty else {
-                    showValidation = true
-                    return
+            Section {
+                Button("保存") {
+                    let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+                    guard !trimmed.isEmpty else {
+                        showValidation = true
+                        return
+                    }
+                    store.addMilestone(pet: pet, title: trimmed, date: date)
+                    onDone()
                 }
-                store.addMilestone(pet: pet, title: trimmed, date: date)
-                onDone()
+                .buttonStyle(.pawPrimary)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
             }
-            .frame(maxWidth: .infinity)
-            .font(.headline)
         }
     }
 }

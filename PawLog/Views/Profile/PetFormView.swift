@@ -44,11 +44,11 @@ struct PetFormView: View {
                         } else {
                             ZStack {
                                 Circle()
-                                    .fill(Color(.systemGray5))
+                                    .fill(Color.pawFill)
                                     .frame(width: 96, height: 96)
                                 Image(systemName: "camera.fill")
                                     .font(.title2)
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(Color.pawTextSecondary)
                             }
                         }
                     }
@@ -71,7 +71,7 @@ struct PetFormView: View {
             if let validationMessage {
                 Section {
                     Text(validationMessage)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Color.pawError)
                         .font(.footnote)
                 }
             }
@@ -80,8 +80,9 @@ struct PetFormView: View {
                 Button(existingPet == nil ? "创建档案" : "保存") {
                     save()
                 }
-                .frame(maxWidth: .infinity)
-                .font(.headline)
+                .buttonStyle(.pawPrimary)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
             }
         }
         .onChange(of: pickedItem) { _, newItem in

@@ -64,13 +64,11 @@ struct WeightChartView: View {
                 .padding()
                 Spacer()
             } else {
-                Spacer()
-                ContentUnavailableView {
-                    Label("暂无体重曲线", systemImage: "chart.line.downtrend.xyaxis")
-                } description: {
-                    Text("记录至少两次体重后生成曲线")
-                }
-                Spacer()
+                PawEmptyState(
+                    systemImage: "chart.line.downtrend.xyaxis",
+                    title: "暂无体重曲线",
+                    message: "记录至少两次体重后生成曲线"
+                )
             }
         }
         .navigationTitle("体重")

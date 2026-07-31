@@ -12,6 +12,9 @@ settings:
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
     DEVELOPMENT_TEAM: 6HRM8RJ78G
+    # 色板符号不在代码里用:颜色常量集中在 DesignTokens.swift(按名取色,两 target 都能用),
+    # 避免 app/appex 生成符号行为不一致导致编译失败
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: "NO"
 targets:
   PawLog:
     type: application

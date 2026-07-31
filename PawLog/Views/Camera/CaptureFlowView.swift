@@ -175,7 +175,7 @@ private struct FallbackPickerView: View {
 
     var body: some View {
         ZStack {
-            Color(.systemGray6).ignoresSafeArea()
+            Color.pawBg.ignoresSafeArea()
 
             if let previewImage {
                 Image(uiImage: previewImage)

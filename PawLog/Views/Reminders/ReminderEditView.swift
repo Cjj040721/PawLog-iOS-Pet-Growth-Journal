@@ -28,12 +28,15 @@ struct ReminderEditView: View {
                     .foregroundStyle(.secondary)
             }
 
-            Button(isSaving ? "保存中…" : "保存提醒") {
-                save()
+            Section {
+                Button(isSaving ? "保存中…" : "保存提醒") {
+                    save()
+                }
+                .buttonStyle(.pawPrimary)
+                .disabled(isSaving)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
             }
-            .frame(maxWidth: .infinity)
-            .font(.headline)
-            .disabled(isSaving)
         }
     }
 

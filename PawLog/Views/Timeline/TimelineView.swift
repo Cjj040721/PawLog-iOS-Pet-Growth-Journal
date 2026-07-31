@@ -78,26 +78,49 @@ struct TimelineView: View {
     }
 
     private var emptyState: some View {
-        ContentUnavailableView {
-            Label("还没有成长记录", systemImage: "camera.badge.ellipsis")
-        } description: {
-            Text("每天一张照片，见证 \(pet.name) 的长大")
-        } actions: {
-            Button("立即记录") {
-                showCapture = true
+        PawEmptyState(
+            systemImage: "camera.badge.ellipsis",
+            title: "还没有成长记录",
+            message: "每天一张照片，见证 \(pet.name) 的长大",
+            buttonTitle: "立即记录"
+        ) {
+            showCapture = true
+        }
+    }
+
+    /// 头部「在一起第 N 天」情感大数字(§2:rounded bold,文字级用 pawPrimaryStrong)
+    @ViewBuilder
+    private var daysHeader: some View {
+        if let days = store.daysTogether(for: pet) {
+            VStack(alignment: .leading, spacing: PawSpacing.xs) {
+                Text("第 \(days) 天")
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    .monospacedDigit()
+                    .foregroundStyle(Color.pawPrimaryStrong)
+                Text("和 \(pet.name) 在一起")
+                    .font(.subheadline)
+                    .foregroundStyle(Color.pawTextSecondary)
             }
-            .buttonStyle(.borderedProminent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, PawSpacing.s)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
         }
     }
 
     private var timelineList: some View {
         List {
-            ForEach(items) { item in
-                switch item {
-                case .record(let record):
-                    DayRecordRow(record: record)
-                case .milestone(let milestone):
-                    MilestoneRow(milestone: milestone)
+            Section {
+                daysHeader
+            }
+            Section {
+                ForEach(items) { item in
+                    switch item {
+                    case .record(let record):
+                        DayRecordRow(record: record)
+                    case .milestone(let milestone):
+                        MilestoneRow(milestone: milestone)
+                    }
                 }
             }
         }
@@ -115,14 +138,14 @@ private struct DayRecordRow: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 64, height: 64)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: PawRadius.thumbnail, style: .continuous))
             } else {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(.systemGray5))
+                RoundedRectangle(cornerRadius: PawRadius.thumbnail, style: .continuous)
+                    .fill(Color.pawFill)
                     .frame(width: 64, height: 64)
                     .overlay {
                         Image(systemName: "photo")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.pawTextSecondary)
                     }
             }
             VStack(alignment: .leading, spacing: 4) {
@@ -154,9 +177,9 @@ private struct MilestoneRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: "star.fill")
-                .foregroundStyle(.yellow)
+                .foregroundStyle(Color.pawMilestone)
                 .frame(width: 64, height: 64)
-                .background(Color.yellow.opacity(0.15), in: RoundedRectangle(cornerRadius: 8))
+                .background(Color.pawMilestoneSoft, in: RoundedRectangle(cornerRadius: PawRadius.thumbnail, style: .continuous))
             VStack(alignment: .leading, spacing: 4) {
                 Text(milestone.date.pawLogShortFormatted)
                     .font(.headline)

@@ -3,15 +3,7 @@ import SwiftUI
 import SwiftData
 
 // MARK: - Timeline
-
-struct PetWidgetEntry: TimelineEntry, Sendable {
-    let date: Date
-    let petName: String?
-    let daysTogether: Int?
-    let photoData: Data?
-
-    static let placeholder = PetWidgetEntry(date: Date(), petName: "宠物", daysTogether: 1, photoData: nil)
-}
+// PetWidgetEntry 与 PawLogWidgetEntryView 在 Shared/Widget/PetWidgetEntryView.swift(app 调试走查共用)
 
 /// WidgetKit 的 completion 不是 Sendable，strict concurrency 下需要显式包装后跨隔离传递。
 private struct CompletionBox<T>: @unchecked Sendable {
@@ -74,42 +66,6 @@ struct PetWidgetProvider: TimelineProvider {
         }
 
         return PetWidgetEntry(date: Date(), petName: pet.name, daysTogether: days, photoData: photoData)
-    }
-}
-
-// MARK: - View
-
-struct PawLogWidgetEntryView: View {
-    let entry: PetWidgetEntry
-
-    var body: some View {
-        VStack(spacing: 8) {
-            if let data = entry.photoData, let image = UIImage(data: data) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 56, height: 56)
-                    .clipShape(Circle())
-            } else {
-                Image(systemName: "pawprint.fill")
-                    .font(.system(size: 36))
-                    .foregroundStyle(.secondary)
-            }
-
-            if let name = entry.petName, let days = entry.daysTogether {
-                Text("在一起第 \(days) 天")
-                    .font(.headline)
-                Text(name)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            } else {
-                Text("打开 PawLog 创建档案")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .containerBackground(.fill.tertiary, for: .widget)
     }
 }
 

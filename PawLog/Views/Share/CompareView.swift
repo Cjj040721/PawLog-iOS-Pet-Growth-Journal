@@ -22,7 +22,7 @@ struct CompareView: View {
                 Image(uiImage: renderedImage)
                     .resizable()
                     .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(RoundedRectangle(cornerRadius: PawRadius.artifact, style: .continuous))
                     .padding(.horizontal)
 
                 HStack(spacing: 24) {
@@ -97,7 +97,7 @@ struct CompareView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(minWidth: 100, minHeight: 100)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipShape(RoundedRectangle(cornerRadius: PawRadius.thumbnail, style: .continuous))
                 }
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
@@ -106,8 +106,8 @@ struct CompareView: View {
                 }
             }
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(isSelected ? Color.accentColor : .clear, lineWidth: 3)
+                RoundedRectangle(cornerRadius: PawRadius.thumbnail, style: .continuous)
+                    .stroke(isSelected ? Color.pawPrimary : .clear, lineWidth: 3)
             )
         }
         .buttonStyle(.plain)
@@ -151,7 +151,8 @@ struct CompareView: View {
     }
 }
 
-/// 被 ImageRenderer 渲染的对比卡片（1080pt 宽逻辑尺寸，scale=2 输出）
+/// 被 ImageRenderer 渲染的对比卡片(540pt 宽逻辑尺寸,scale=2 输出)。
+/// 产出物模板 §6.1:奶油底固定浅色版、照片圆角 20、奶油信息条 + PawLog 落款、整卡圆角 20 导出。
 struct CompareCardView: View {
     let firstImage: UIImage
     let firstLabel: String
@@ -159,30 +160,44 @@ struct CompareCardView: View {
     let secondLabel: String
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
+        VStack(spacing: 12) {
+            HStack(spacing: 16) {
                 CompareHalf(image: firstImage)
                 CompareHalf(image: secondImage)
             }
-            .frame(width: 540, height: 540)
-            .clipped()
+            .frame(height: 460)
 
-            HStack(spacing: 0) {
-                Text(firstLabel)
-                    .frame(maxWidth: .infinity)
-                Text(secondLabel)
-                    .frame(maxWidth: .infinity)
+            // 底部信息条:奶油底 + pawText 标注,左下角 PawLog 落款
+            VStack(spacing: 8) {
+                HStack(spacing: 16) {
+                    Text(firstLabel)
+                        .frame(maxWidth: .infinity)
+                    Text(secondLabel)
+                        .frame(maxWidth: .infinity)
+                }
+                .font(.caption)
+                .foregroundStyle(Color.pawText)
+                HStack {
+                    Text("PawLog")
+                        .font(.caption)
+                        .foregroundStyle(Color.pawTextSecondary)
+                    Spacer()
+                }
             }
-            .font(.caption)
-            .foregroundStyle(.white)
+            .padding(.horizontal, 12)
             .padding(.vertical, 10)
-            .background(.black)
+            .background(Color.pawSurface, in: RoundedRectangle(cornerRadius: PawRadius.thumbnail, style: .continuous))
         }
+        .padding(16)
         .frame(width: 540)
+        .background(Color.pawBg)
+        .clipShape(RoundedRectangle(cornerRadius: PawRadius.artifact, style: .continuous))
+        // 产出物固定浅色版,保证任何分享场景一致(§6.1)
+        .environment(\.colorScheme, .light)
     }
 }
 
-/// 对比图的一侧：完整显示照片（scaledToFit），四周留白，空白处用同图的模糊放大填充，不裁切主体。
+/// 对比图的一侧:完整显示照片(scaledToFit),四周留白,空白处用同图的模糊放大填充,不裁切主体。
 private struct CompareHalf: View {
     let image: UIImage
 
@@ -197,8 +212,8 @@ private struct CompareHalf: View {
                 .scaledToFit()
                 .padding(20)
         }
-        .frame(width: 270, height: 540)
-        .background(.black)
-        .clipped()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.pawBg)
+        .clipShape(RoundedRectangle(cornerRadius: PawRadius.artifact, style: .continuous))
     }
 }

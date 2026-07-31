@@ -26,7 +26,7 @@ struct DayRecordEditorView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(width: 200, height: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: PawRadius.card, style: .continuous))
                     Spacer()
                 }
                 .listRowBackground(Color.clear)
@@ -37,7 +37,7 @@ struct DayRecordEditorView: View {
                 if existingRecord != nil {
                     Text("当天已有记录，保存将覆盖更新")
                         .font(.footnote)
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Color.pawWarningText)
                 }
             }
 
@@ -54,20 +54,23 @@ struct DayRecordEditorView: View {
                     .lineLimit(2...4)
             }
 
-            Button("保存记录") {
-                let weight = Double(weightText.replacingOccurrences(of: ",", with: "."))
-                let trimmedNote = note.trimmingCharacters(in: .whitespacesAndNewlines)
-                store.upsertRecord(
-                    for: date,
-                    pet: pet,
-                    photo: image,
-                    weightKg: weight,
-                    note: trimmedNote.isEmpty ? nil : trimmedNote
-                )
-                onDone()
+            Section {
+                Button("保存记录") {
+                    let weight = Double(weightText.replacingOccurrences(of: ",", with: "."))
+                    let trimmedNote = note.trimmingCharacters(in: .whitespacesAndNewlines)
+                    store.upsertRecord(
+                        for: date,
+                        pet: pet,
+                        photo: image,
+                        weightKg: weight,
+                        note: trimmedNote.isEmpty ? nil : trimmedNote
+                    )
+                    onDone()
+                }
+                .buttonStyle(.pawPrimary)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
             }
-            .frame(maxWidth: .infinity)
-            .font(.headline)
         }
         .onChange(of: date, initial: true) { _, newDate in
             // 切到已有记录的日期时预填体重和备注，便于修改而不是从头填
