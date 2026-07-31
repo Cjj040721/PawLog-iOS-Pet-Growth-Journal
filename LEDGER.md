@@ -4,10 +4,10 @@
 - (空)
 
 ## NEXT
-- T9 真机回归验证:相机对比模式流畅度、存相册、补记流程(T4/T5/T6 修复后未回归);新增:成长视频导出 + 存相册 + 分享(CAO-13 重构后,需真机验证)
 - T11 战略待定:v1.1 是否上轻订阅;上线前是否先做 landing page 验证需求
 
 ## DONE
+- 2026-07-31 | CAO-29(T9) | 真机回归验证完成:相机对比模式流畅度、存相册、补记流程(T4/T5/T6 修复后)、成长视频导出 + 存相册 + 分享(CAO-13 AVAssetWriter 重构后)全部走通 | — | 本人真机目检(issue CAO-29 状态记录)
 - 2026-07-31 | CAO-28 | 修复编译报错(PawLogApp.swift:pawPrimary 无法推断 + Debug 系列视图不在作用域):根因是本地 xcodeproj 生成早于 7fd01f3(该提交新增 DesignTokens.swift / DebugWalkthroughView.swift),新文件未进 target——坑清单 #6 复现;重跑 xcodegen 重新索引即恢复,源码零改动 | — | build + archive 零警告
 - 2026-07-31 | CAO-22 | 分支整合进 main:视频重构(CAO-13)+ 视觉落地(CAO-14)经 df57acc5 快进合并,design-language 首版(2dd3cbf5)与定稿 + landing(cc5b81ab)合并;design-language.md 冲突取 CAO-14 全量版并追加 §10 Web 令牌,LEDGER DONE 保留全部条目 | `e82e3a4` | main 上 xcodegen + build + archive 零警告
 - 2026-07-31 | CAO-14 | 视觉规范 v1.0 落地:design/design-language.md 入库,DesignTokens 基础设施(15 colorset 深浅双值 + 常量/主按钮/空状态组件),P1(里程碑星金/对比图奶油卡/表单胶囊主按钮/暖调占位),P2(圆角归一/空状态三件套/小组件品牌色/第 N 天大数字) | `7fd01f3` | build+archive 零警告;模拟器四 Tab+对比图+小组件深浅两版截图走查(issue 评论附件)
