@@ -27,6 +27,11 @@ targets:
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
         NSCameraUsageDescription: 需要相机权限来拍摄宠物照片
         NSPhotoLibraryUsageDescription: 用于从相册选择宠物照片
         NSPhotoLibraryAddUsageDescription: 用于保存生成的对比图和成长视频到相册
