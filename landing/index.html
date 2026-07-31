@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawLog · 看着它长大</title>
+<meta name="description" content="PawLog 是一款幼宠成长记录 App:同角度叠加拍照、一键成长对比图与视频、「在一起第 N 天」桌面小组件。即将上架 App Store。">
+<meta property="og:title" content="PawLog · 看着它长大">
+<meta property="og:description" content="同一个角度,一天天拍下去,成长自己就显影了。即将上架,留邮箱第一时间通知你。">
+<meta property="og:type" content="website">
+<style>
+  /* ===== 设计令牌(与 design/design-language.md 一致)===== */
+  :root{
+    /* 暖阳杏 Apricot —— hex 兜底,下一行 oklch 覆盖 */
+    --apricot-300:#F8D6AD; --apricot-300:oklch(0.88 0.08 68);
+    --apricot-400:#F4BE85; --apricot-400:oklch(0.83 0.11 62);
+    --apricot-500:#EEA268; --apricot-500:oklch(0.78 0.12 55);
+    --apricot-600:#E0875F; --apricot-600:oklch(0.70 0.13 45);
+    /* 奶油白 Cream */
+    --cream-50:#FBF6EF;   --cream-50:oklch(0.975 0.012 80);
+    --cream-100:#F4EBDF;  --cream-100:oklch(0.955 0.018 75);
+    --peach-100:#F9E4D2;  --peach-100:oklch(0.94 0.035 65);
+    /* 暖调中性 Ink */
+    --ink-900:#463728; --ink-900:oklch(0.32 0.02 55);
+    --ink-600:#7C6B59; --ink-600:oklch(0.50 0.02 60);
+    --ink-400:#A99A89; --ink-400:oklch(0.65 0.02 65);
+    --ink-100:#E4D9CB; --ink-100:oklch(0.90 0.015 70);
+    /* 圆角 */
+    --radius-s:12px; --radius-m:20px; --radius-l:28px; --radius-pill:999px;
+    /* 质感 */
+    --shadow-soft:0 8px 24px rgba(70,55,40,0.08);
+    --gradient-brand:linear-gradient(135deg, var(--apricot-400), var(--apricot-600));
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:var(--cream-50); color:var(--ink-900);
+    line-height:1.6; font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* ===== 导航 ===== */
+  header{padding:20px 0;}
+  nav{display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink-900);text-decoration:none;}
+  .brand svg{width:30px;height:30px;}
+  .nav-cta{
+    font-size:14px;font-weight:600;color:var(--apricot-600);text-decoration:none;
+    border:1px solid var(--apricot-400);border-radius:var(--radius-pill);padding:8px 18px;
+    transition:background .2s;
+  }
+  .nav-cta:hover{background:var(--peach-100);}
+
+  /* ===== Hero ===== */
+  .hero{display:flex;align-items:center;gap:56px;padding:64px 0 48px;flex-wrap:wrap;}
+  .hero-copy{flex:1 1 420px;min-width:300px;}
+  .eyebrow{
+    display:inline-block;font-size:13px;font-weight:600;letter-spacing:.04em;
+    color:var(--apricot-600);background:var(--peach-100);
+    border-radius:var(--radius-pill);padding:6px 14px;margin-bottom:20px;
+  }
+  h1{font-size:44px;line-height:1.2;font-weight:800;letter-spacing:-.01em;margin-bottom:20px;}
+  .hero-sub{font-size:18px;color:var(--ink-600);max-width:30em;margin-bottom:32px;}
+  .btn-primary{
+    display:inline-block;background:var(--apricot-500);color:#fff;font-weight:700;font-size:17px;
+    text-decoration:none;border:none;cursor:pointer;
+    border-radius:var(--radius-pill);padding:16px 36px;box-shadow:var(--shadow-soft);
+    transition:background .2s, transform .15s;
+  }
+  .btn-primary:hover{background:var(--apricot-600);}
+  .btn-primary:active{transform:scale(.97);}
+  .hero-note{margin-top:14px;font-size:14px;color:var(--ink-400);}
+  .hero-art{flex:1 1 380px;min-width:280px;display:flex;justify-content:center;}
+
+  /* ===== 演示视频占位 ===== */
+  .demo-slot{
+    border:2px dashed var(--ink-100);border-radius:var(--radius-l);
+    padding:40px 32px;text-align:center;color:var(--ink-400);
+    background:var(--cream-100);margin:8px 0 24px;
+  }
+  .demo-slot strong{display:block;color:var(--ink-600);font-size:16px;margin-bottom:6px;}
+  .demo-slot span{font-size:14px;}
+
+  /* ===== 三个差异化点 ===== */
+  .features{padding:56px 0 24px;}
+  .feature{
+    display:flex;align-items:center;gap:56px;padding:48px 0;flex-wrap:wrap;
+  }
+  .feature.flip{flex-direction:row-reverse;}
+  .feature-art{flex:1 1 360px;min-width:280px;display:flex;justify-content:center;}
+  .feature-copy{flex:1 1 380px;min-width:300px;}
+  .tag{
+    display:inline-block;font-size:13px;font-weight:600;color:var(--apricot-600);
+    background:var(--peach-100);border-radius:var(--radius-pill);
+    padding:5px 14px;margin-bottom:16px;
+  }
+  h2{font-size:28px;line-height:1.25;font-weight:700;margin-bottom:14px;}
+  .feature-copy p{color:var(--ink-600);max-width:26em;}
+  .art-card{
+    background:#fff;border-radius:var(--radius-l);box-shadow:var(--shadow-soft);
+    padding:28px;width:100%;max-width:420px;
+  }
+
+  /* ===== 留资 ===== */
+  .signup{padding:64px 0 80px;}
+  .signup-card{
+    background:var(--gradient-brand);border-radius:var(--radius-l);
+    padding:64px 32px;text-align:center;color:#fff;box-shadow:var(--shadow-soft);
+  }
+  .signup-card h2{color:#fff;margin-bottom:12px;}
+  .signup-card p{color:rgba(255,255,255,.88);margin-bottom:32px;}
+  .notify-form{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .notify-form input{
+    font:inherit;font-size:16px;color:var(--ink-900);
+    width:min(320px,100%);padding:15px 22px;border:2px solid transparent;
+    border-radius:var(--radius-pill);outline:none;background:#fff;
+  }
+  .notify-form input:focus{border-color:var(--ink-900);}
+  .notify-form button{
+    font:inherit;font-size:16px;font-weight:700;cursor:pointer;
+    color:var(--apricot-600);background:#fff;border:none;
+    border-radius:var(--radius-pill);padding:15px 36px;
+    transition:transform .15s;
+  }
+  .notify-form button:active{transform:scale(.97);}
+  .notify-note{margin-top:18px;font-size:14px;color:rgba(255,255,255,.85);min-height:1.5em;}
+
+  /* ===== 页脚 ===== */
+  footer{border-top:1px solid var(--ink-100);padding:32px 0 48px;text-align:center;}
+  footer .foot-brand{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;color:var(--ink-900);margin-bottom:8px;}
+  footer .foot-brand svg{width:20px;height:20px;}
+  footer p{font-size:14px;color:var(--ink-400);}
+
+  @media (max-width:860px){
+    h1{font-size:34px;}
+    .hero{gap:36px;padding:40px 0 32px;}
+    .feature,.feature.flip{flex-direction:column;gap:32px;padding:36px 0;}
+    .feature-art{order:-1;}
+    .signup-card{padding:48px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 通用图形:狗剪影(同角度叠加示意用)===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 站姿犬剪影:侧面朝右,由同色几何体拼成,可整体缩放 -->
+    <g id="dog">
+      <rect x="58" y="118" width="124" height="44" rx="22"/>
+      <path d="M150,128 L186,92 L206,108 L170,144 Z"/>
+      <circle cx="188" cy="88" r="26"/>
+      <rect x="200" y="84" width="36" height="20" rx="10"/>
+      <circle cx="234" cy="92" r="6"/>
+      <path d="M176,64 Q150,60 150,84 Q150,102 166,100 Q178,94 180,78 Z"/>
+      <rect x="74" y="150" width="15" height="58" rx="7.5"/>
+      <rect x="98" y="150" width="15" height="58" rx="7.5"/>
+      <rect x="148" y="150" width="15" height="58" rx="7.5"/>
+      <rect x="170" y="150" width="15" height="58" rx="7.5"/>
+      <path d="M62,130 Q38,116 36,92" fill="none" stroke-width="11" stroke-linecap="round"/>
+    </g>
+    <!-- 爪印 logo(与 app 图标同形) -->
+    <g id="paw">
+      <ellipse cx="50" cy="68" rx="26" ry="20"/>
+      <ellipse cx="24" cy="38" rx="8.5" ry="12" transform="rotate(-18 24 38)"/>
+      <ellipse cx="41" cy="24" rx="8.5" ry="12" transform="rotate(-6 41 24)"/>
+      <ellipse cx="59" cy="24" rx="8.5" ry="12" transform="rotate(6 59 24)"/>
+      <ellipse cx="76" cy="38" rx="8.5" ry="12" transform="rotate(18 76 38)"/>
+    </g>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#">
+        <svg viewBox="0 0 100 100" fill="var(--apricot-500)" aria-hidden="true"><use href="#paw"/></svg>
+        PawLog
+      </a>
+      <a class="nav-cta" href="#notify">上架通知</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">幼宠成长记录 · 即将上架</span>
+      <h1>它长大的样子,<br>一张都不要错过。</h1>
+      <p class="hero-sub">
+        PawLog 帮你用同一个角度拍下它的每一天:上一次的照片会变成半透明的影子叠在取景框里,
+        对齐、按下快门——从一只手能捧住,到两只手抱不动,成长自己就显影了。
+      </p>
+      <a class="btn-primary" href="#notify">上架第一时间告诉我</a>
+      <p class="hero-note">即将上架 App Store · 免费下载</p>
+    </div>
+    <div class="hero-art">
+      <!-- 同角度叠加拍照示意:取景框里,旧照片的影子(白,半透明)与当前画面(杏色)正在对齐 -->
+      <svg viewBox="0 0 320 420" width="300" role="img" aria-label="同角度叠加拍照示意图">
+        <rect x="10" y="10" width="300" height="400" rx="36" fill="#fff" stroke="var(--ink-100)" stroke-width="2"/>
+        <rect x="34" y="46" width="252" height="288" rx="20" fill="var(--cream-100)"/>
+        <!-- 旧照片的影子(半透明) -->
+        <g fill="var(--apricot-300)" opacity="0.85" stroke="var(--apricot-300)" transform="translate(52,96) scale(0.86)">
+          <use href="#dog"/>
+        </g>
+        <!-- 当前取景画面(实) -->
+        <g fill="var(--apricot-500)" stroke="var(--apricot-500)" transform="translate(66,108) scale(0.86)">
+          <use href="#dog"/>
+        </g>
+        <!-- 取景框角标 -->
+        <g stroke="var(--apricot-600)" stroke-width="4" fill="none" stroke-linecap="round">
+          <path d="M52,84 v-16 a8,8 0 0 1 8,-8 h16"/>
+          <path d="M244,60 h16 a8,8 0 0 1 8,8 v16"/>
+          <path d="M52,296 v16 a8,8 0 0 0 8,8 h16"/>
+          <path d="M244,320 h16 a8,8 0 0 0 8,-8 v-16"/>
+        </g>
+        <text x="160" y="374" text-anchor="middle" font-size="15" fill="var(--ink-600)">对齐影子,按下快门</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- DEMO VIDEO SLOT:真机演示视频(同角度叠加实拍录屏)后补,替换此占位块即可 -->
+  <div class="demo-slot">
+    <strong>真机演示视频 · 筹备中</strong>
+    <span>同角度叠加拍照的实机录屏会上线前放在这里。</span>
+  </div>
+
+  <!-- ===== 三个差异化点 ===== -->
+  <section class="features">
+
+    <div class="feature">
+      <div class="feature-art">
+        <div class="art-card">
+          <svg viewBox="0 0 320 300" width="100%" role="img" aria-label="两天照片对齐叠加示意">
+            <rect x="20" y="24" width="280" height="216" rx="16" fill="var(--cream-100)"/>
+            <g fill="var(--apricot-300)" opacity="0.85" stroke="var(--apricot-300)" transform="translate(48,34) scale(0.78)"><use href="#dog"/></g>
+            <g fill="var(--apricot-500)" stroke="var(--apricot-500)" transform="translate(62,46) scale(0.78)"><use href="#dog"/></g>
+            <text x="160" y="278" text-anchor="middle" font-size="14" fill="var(--ink-400)">第 87 天 · 与第 86 天自动对齐</text>
+          </svg>
+        </div>
+      </div>
+      <div class="feature-copy">
+        <span class="tag">同角度叠加拍照</span>
+        <h2>昨天的影子,帮你对齐今天</h2>
+        <p>
+          打开相机,上一次拍的照片会半透明显示在取景框上。对齐、按下快门——角度每次都一样,
+          对比才真正成立。不用再凭记忆找角度。
+        </p>
+      </div>
+    </div>
+
+    <div class="feature flip">
+      <div class="feature-art">
+        <div class="art-card">
+          <svg viewBox="0 0 360 300" width="100%" role="img" aria-label="成长对比图示意:左小右大">
+            <!-- 左:小时候 -->
+            <rect x="16" y="40" width="140" height="200" rx="16" fill="var(--cream-100)"/>
+            <g fill="var(--apricot-400)" stroke="var(--apricot-400)" transform="translate(52,120) scale(0.42)"><use href="#dog"/></g>
+            <text x="86" y="268" text-anchor="middle" font-size="14" fill="var(--ink-400)">第 30 天</text>
+            <!-- 右:长大后 -->
+            <rect x="204" y="40" width="140" height="200" rx="16" fill="var(--cream-100)"/>
+            <g fill="var(--apricot-600)" stroke="var(--apricot-600)" transform="translate(212,84) scale(0.62)"><use href="#dog"/></g>
+            <text x="274" y="268" text-anchor="middle" font-size="14" fill="var(--ink-400)">第 300 天</text>
+            <!-- 中间箭头 -->
+            <path d="M164,140 h28 m0,0 l-8,-8 m8,8 l-8,8" stroke="var(--ink-400)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="feature-copy">
+        <span class="tag">一键对比图 &amp; 成长视频</span>
+        <h2>一眨眼,它就长大了</h2>
+        <p>
+          选一个时间段,自动生成并排对比图,或一段带日期和年龄字幕的成长视频。
+          发到家人群,刚刚好。
+        </p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-art">
+        <div class="art-card">
+          <svg viewBox="0 0 320 260" width="100%" role="img" aria-label="桌面小组件示意:在一起第 128 天">
+            <rect x="30" y="30" width="260" height="180" rx="28" fill="var(--peach-100)"/>
+            <g fill="var(--apricot-500)" transform="translate(56,72) scale(0.5)"><use href="#paw"/></g>
+            <text x="122" y="112" font-size="15" fill="var(--ink-600)">豆豆 · 在一起</text>
+            <text x="120" y="168" font-size="46" font-weight="800" fill="var(--ink-900)" style="font-variant-numeric:tabular-nums">128 天</text>
+          </svg>
+        </div>
+      </div>
+      <div class="feature-copy">
+        <span class="tag">桌面小组件</span>
+        <h2>在一起第 N 天,抬头就能看见</h2>
+        <p>
+          不用打开 App,桌面小组件替你数着你们互相陪伴的日子。
+          它不会陪你很久很久——所以每一天都值得被看见。
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== 留资 ===== -->
+  <section class="signup" id="notify">
+    <div class="signup-card">
+      <h2>上架那天,第一个告诉你</h2>
+      <p>留下邮箱,只发一封上架通知,不打扰。</p>
+      <form class="notify-form" id="notifyForm">
+        <input type="email" id="notifyEmail" placeholder="你的邮箱" required autocomplete="email">
+        <button type="submit">通知我</button>
+      </form>
+      <p class="notify-note" id="notifyNote"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <svg viewBox="0 0 100 100" fill="var(--apricot-500)" aria-hidden="true"><use href="#paw"/></svg>
+      PawLog
+    </div>
+    <p>看着它长大 · © 2026 PawLog</p>
+  </div>
+</footer>
+
+<script>
+  /* ===== 留资配置(免后端)=====
+     方案:mailto。点「通知我」唤起访客自己的邮件 App,把 ta 的邮箱写进正文发给接收地址。
+     ★ 部署前必改:把下面的 CONTACT_EMAIL 换成接收上线通知的邮箱(一行)。
+     升级路径:以后要换 Formspree/FormSubmit 等免费表单,只需把 submit 处理改成
+     fetch 对应 endpoint,DOM 结构不用动。 */
+  var CONTACT_EMAIL = "REPLACE-ME@example.com";
+
+  document.getElementById("notifyForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = document.getElementById("notifyEmail").value.trim();
+    var note = document.getElementById("notifyNote");
+    if (!email) return;
+    var subject = encodeURIComponent("PawLog 上架通知");
+    var body = encodeURIComponent("上架时请通知我:\n\n我的邮箱:" + email + "\n");
+    window.location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + subject + "&body=" + body;
+    note.textContent = "已唤起邮件 App,点发送就完成了。没反应的话,直接写信到 " + CONTACT_EMAIL + " 也可以。";
+  });
+</script>
+
+</body>
+</html>

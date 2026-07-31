@@ -8,9 +8,11 @@
 - T11 战略待定:v1.1 是否上轻订阅;上线前是否先做 landing page 验证需求
 
 ## DONE
+<<<<<<< HEAD
 - 2026-07-31 | CAO-14 | 视觉规范 v1.0 落地:design/design-language.md 入库,DesignTokens 基础设施(15 colorset 深浅双值 + 常量/主按钮/空状态组件),P1(里程碑星金/对比图奶油卡/表单胶囊主按钮/暖调占位),P2(圆角归一/空状态三件套/小组件品牌色/第 N 天大数字) | `7fd01f3` | build+archive 零警告;模拟器四 Tab+对比图+小组件深浅两版截图走查(issue 评论附件)
 - 2026-07-30 | CAO-13 | 成长视频导出重构为 AVAssetWriter 逐帧写入(字幕按 design-language §6.2,接进度条);渲染路径 autoreleasepool 控内存;构建恢复零警告 | `80c8ba3` `7f1146f` | build+archive 零警告;模拟器实测 8 帧 15.8s/120 帧 241.6s,峰值内存 736MB 恒定,存相册走通;导出+存相册+分享需真机验证(入 T9)
 - 2026-07-30 | T12 | [美术] 建立 design/design-language.md 视觉规范(色彩 OKLCH/字体/圆角/组件状态/产出物模板)+ 视觉问题清单(CAO-11) | `9e0eacf` | design/preview/design-tokens.png 示意稿
+- 2026-07-30 | T12 | 设计语言 v1 定稿(design/design-language.md)+ 最小版 landing page(landing/index.html,留资用 mailto 免后端方案) | `3392f91` | Playwright 截图走查(桌面 1280 + 移动 390)
 - 2026-07-30 | T8 | 补三件套(README/LEDGER/AGENTS.md) | — | 已目检
 - 2026-07-30 | T7 | git init + 首次提交,代码资产入库 | `2e5252a` | git log 确认
 - 2026-07-28 | T6 | 补记:记录日期可选过去,已有记录预填+覆盖提示 | — | xcodebuild 通过
