@@ -6,6 +6,7 @@ struct GrowthVideoView: View {
     let photoRecords: [DayRecord]
 
     @State private var isExporting = false
+    @State private var exportProgress: Double = 0
     @State private var videoURL: URL?
     @State private var showShareSheet = false
     @State private var statusMessage: String?
@@ -13,7 +14,12 @@ struct GrowthVideoView: View {
     var body: some View {
         VStack(spacing: 20) {
             if isExporting {
-                ProgressView("正在合成视频…")
+                // 120 帧导出为分钟级,必须有进度反馈(逐帧回调)
+                ProgressView(value: exportProgress)
+                Text("正在合成视频… \(Int((exportProgress * 100).rounded()))%")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
             } else if let videoURL {
                 Label("视频已生成", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
@@ -68,6 +74,7 @@ struct GrowthVideoView: View {
 
     private func export() {
         isExporting = true
+        exportProgress = 0
         statusMessage = nil
 
         // 先提取标量 / 文件 URL，@Model 对象不跨 async 边界
@@ -81,9 +88,19 @@ struct GrowthVideoView: View {
         let outputURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("pawlog-growth-\(UUID().uuidString).mp4")
 
+        // 进度回调在后台队列触发;State 是 Sendable,回主线程更新进度条(取 max 保单调)
+        let progressState = _exportProgress
+        let onProgress: @Sendable (Double) -> Void = { value in
+            Task { @MainActor in
+                if value > progressState.wrappedValue {
+                    progressState.wrappedValue = value
+                }
+            }
+        }
+
         Task { @MainActor in
             do {
-                let url = try await GrowthVideoExporter.export(frames: frames, to: outputURL)
+                let url = try await GrowthVideoExporter.export(frames: frames, to: outputURL, progress: onProgress)
                 isExporting = false
                 videoURL = url
             } catch {
