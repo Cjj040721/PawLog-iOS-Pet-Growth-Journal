@@ -4,9 +4,10 @@
 - (空)
 
 ## NEXT
-- T11 战略待定:v1.1 是否上轻订阅;上线前是否先做 landing page 验证需求
+- T11 战略待定:v1.1 是否上轻订阅(已拍板:不上,推迟至 v1.2)
 
 ## DONE
+- 2026-07-31 | CAO-15 | 最小版 landing page 发布上线:本人拍板发布,Cloudflare 静态托管,留资邮箱 caojunjia040721@163.com | — | https://wandering-queen-f8fa.caojunjia040721.workers.dev
 - 2026-07-31 | CAO-29(T9) | 真机回归验证完成:相机对比模式流畅度、存相册、补记流程(T4/T5/T6 修复后)、成长视频导出 + 存相册 + 分享(CAO-13 AVAssetWriter 重构后)全部走通 | — | 本人真机目检(issue CAO-29 状态记录)
 - 2026-07-31 | CAO-28 | 修复编译报错(PawLogApp.swift:pawPrimary 无法推断 + Debug 系列视图不在作用域):根因是本地 xcodeproj 生成早于 7fd01f3(该提交新增 DesignTokens.swift / DebugWalkthroughView.swift),新文件未进 target——坑清单 #6 复现;重跑 xcodegen 重新索引即恢复,源码零改动 | — | build + archive 零警告
 - 2026-07-31 | CAO-22 | 分支整合进 main:视频重构(CAO-13)+ 视觉落地(CAO-14)经 df57acc5 快进合并,design-language 首版(2dd3cbf5)与定稿 + landing(cc5b81ab)合并;design-language.md 冲突取 CAO-14 全量版并追加 §10 Web 令牌,LEDGER DONE 保留全部条目 | `e82e3a4` | main 上 xcodegen + build + archive 零警告
