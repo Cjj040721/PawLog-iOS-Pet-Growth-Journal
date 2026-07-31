@@ -28,6 +28,14 @@ xcodebuild -scheme PawLog -destination 'generic/platform=iOS' archive \
 - Team ID `6HRM8RJ78G`(Personal Team)已固化在 project.yml;免费账号签名 7 天过期,需重装
 - 所有工程级配置必须写进 `project.yml`——Xcode 界面里改的设置会被 xcodegen 覆盖
 
+## 同步纪律(2026-07-31 教训,必须遵守)
+
+1. **在本人本地仓库(~/Projects/pet)产生的任何提交必须当场 push**,LEDGER 回写等
+   工作区改动也必须当场提交并推送——不允许留未提交/未推送的尾巴。本地与云端
+   偏离一次,就会连锁引发:编译报错排查失真、issue 状态与台账不一致、pull 被拒。
+2. **拉取新代码后必跑 `xcodegen`** 再开 Xcode:`.xcodeproj` 是生成物,新增文件
+   不进 target 会直接编译报错(坑清单 #6,CAO-28 复现过一次)。
+
 ## 坑清单(都闪退过或踩过,别再犯)
 
 1. **AVCaptureSession 必须先 `commitConfiguration()` 再 `startRunning()`**——顺序反了抛
