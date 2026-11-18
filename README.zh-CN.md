@@ -1,0 +1,32 @@
+# PawLog — iOS 宠物成长记录
+
+**[English](README.md) · [简体中文](README.zh-CN.md) · [产品主页](https://wandering-queen-f8fa.caojunjia040721.workers.dev)**
+
+![PawLog 时间线、体重、回顾和宠物档案真实模拟器截图](docs/assets/hero.png)
+
+> 一句话:给新手宠物主的成长时间胶囊——照片日记 + 同角度对比 + 体重曲线 + 里程碑提醒,
+> 记录自动沉淀为可分享的对比图和成长视频。
+> 阶段:v1 功能已铺开,真机验证与打磨期,未上架。
+
+## 定位与差异化
+
+- 目标用户:养幼宠前 12 个月的新手宠物主(变化最快、最值得记录的窗口期)
+- 差异化:同角度叠加对比拍照(取景画面叠加上一张照片)、对比图、成长视频自动生成
+- 不做什么(v1):社交/社区、医疗建议、电商、多设备同步、内购(全免费)
+
+## 技术
+
+Swift 6 + SwiftUI + SwiftData + WidgetKit + Swift Charts,部署目标 iOS 26,
+XcodeGen 管理工程(`project.yml` 是源头,`*.xcodeproj` 不入库),零三方依赖,纯本地存储。
+
+## 文档
+
+- `product-spec.md` — 产品 spec,Given/When/Then 验收标准是完成的定义
+- `market-research.md` — 市场调研与可行性分析
+- `LEDGER.md` — 任务台账;`AGENTS.md` — 构建/验证/坑清单
+
+## 当前状态
+
+v1 范围:多宠物档案、照片日记(拍照/相册/补记过去日期)、对比模式拍照、体重曲线、
+里程碑 + 本地提醒、对比图/成长视频生成与分享、桌面小组件。
+待办见 `LEDGER.md` 的 NOW/NEXT。
