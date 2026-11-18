@@ -79,8 +79,8 @@ SwiftUI views
 - An iPhone Simulator for the standard build; a physical device for camera validation
 
 ```bash
-git clone https://github.com/Cjj040721/pawlog.git
-cd pawlog
+git clone https://github.com/Cjj040721/PawLog-iOS-Pet-Growth-Journal.git
+cd PawLog-iOS-Pet-Growth-Journal
 xcodegen
 open PawLog.xcodeproj
 ```
@@ -119,7 +119,7 @@ The project currently has no test target. Its documented release gate is a zero-
 ## 6. Repository Structure
 
 ```text
-pawlog/
+PawLog-iOS-Pet-Growth-Journal/
 ├── PawLog/
 │   ├── App/                  # App entry and root state
 │   ├── ViewModels/           # Application state
