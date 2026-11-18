@@ -7,6 +7,7 @@
 - T11 战略待定:v1.1 是否上轻订阅(已拍板:不上,推迟至 v1.2)
 
 ## DONE
+- 2026-11-18 | GitHub 作品集展示改造 | 修复新版编译器下视频进度可选 State 未解包导致的构建失败；新增英文主页、中文入口、四个 Tab 的真实模拟器截图与组合首图；未改产品范围、未上架 | `893ed30` `76daa6d` | iPhone 17 Simulator build 零警告 + generic iOS archive 零警告；README 本地链接检查通过
 - 2026-07-31 | CAO-15 | 最小版 landing page 发布上线:本人拍板发布,Cloudflare 静态托管,留资邮箱 caojunjia040721@163.com | — | https://wandering-queen-f8fa.caojunjia040721.workers.dev
 - 2026-07-31 | CAO-29(T9) | 真机回归验证完成:相机对比模式流畅度、存相册、补记流程(T4/T5/T6 修复后)、成长视频导出 + 存相册 + 分享(CAO-13 AVAssetWriter 重构后)全部走通 | — | 本人真机目检(issue CAO-29 状态记录)
 - 2026-07-31 | CAO-28 | 修复编译报错(PawLogApp.swift:pawPrimary 无法推断 + Debug 系列视图不在作用域):根因是本地 xcodeproj 生成早于 7fd01f3(该提交新增 DesignTokens.swift / DebugWalkthroughView.swift),新文件未进 target——坑清单 #6 复现;重跑 xcodegen 重新索引即恢复,源码零改动 | — | build + archive 零警告
