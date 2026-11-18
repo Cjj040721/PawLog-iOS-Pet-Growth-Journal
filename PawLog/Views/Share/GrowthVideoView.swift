@@ -92,6 +92,7 @@ struct GrowthVideoView: View {
         let progressState = _exportProgress
         let onProgress: @Sendable (Double) -> Void = { value in
             Task { @MainActor in
+                guard let progressState else { return }
                 if value > progressState.wrappedValue {
                     progressState.wrappedValue = value
                 }
